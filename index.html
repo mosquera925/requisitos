@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TICKET </title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#e9edf3;
+    font-family:'Segoe UI',sans-serif;
+    padding:20px;
+}
+
+.formulario{
+    width:360px;
+    background:#fff;
+    margin:auto;
+    padding:22px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    color:#111827;
+    margin-bottom:5px;
+}
+
+.subtitulo{
+    text-align:center;
+    color:#6b7280;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:14px;
+    font-size:13px;
+    font-weight:700;
+    color:#111827;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:14px;
+    outline:none;
+    transition:.2s;
+}
+
+input:focus,
+select:focus{
+    border-color:#111827;
+}
+
+button{
+    width:100%;
+    margin-top:24px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#111827;
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#000;
+    transform:scale(1.02);
+}
+
+/* ========================= */
+/* TICKET PDF */
+/* ========================= */
+
+#ticketPDF{
+    position:absolute;
+    left:-99999px;
+    top:0;
+    width:300px;
+    background:#fff;
+    padding:0;
+    overflow:hidden;
+    border-radius:12px;
+}
+
+.ticket-header{
+    background:#111827;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+}
+
+.ticket-header h1{
+    font-size:22px;
+    letter-spacing:2px;
+}
+
+.ticket-header p{
+    margin-top:5px;
+    font-size:12px;
+    opacity:.9;
+}
+
+.ticket-body{
+    padding:18px;
+    font-size:12px;
+    color:#111;
+    line-height:1.7;
+}
+
+.linea{
+    border-top:1px dashed #999;
+    margin:12px 0;
+}
+
+.titulo{
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.info{
+    margin-bottom:6px;
+}
+
+.info strong{
+    color:#000;
+}
+
+.requisitos{
+    margin-top:10px;
+    padding-left:18px;
+}
+
+.requisitos li{
+    margin-bottom:5px;
+}
+
+.resumen{
+    background:#f3f4f6;
+    border-radius:10px;
+    padding:12px;
+    margin-top:12px;
+}
+
+.resumen div{
+    margin-bottom:6px;
+    font-size:12px;
+}
+
+.mensaje{
+    margin-top:14px;
+    font-size:11px;
+    text-align:justify;
+}
+
+.footer{
+    text-align:center;
+    font-size:11px;
+    color:#6b7280;
+    margin-top:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="formulario">
+
+<div class="logo">HM</div>
+<div class="subtitulo">
+
+</div>
+
+<label>Cliente</label>
+<input type="text" id="cliente">
+
+<label>Tipo de crédito</label>
+<select id="tipoCredito">
+
+<option>Consumo</option>
+<option>Vehicular</option>
+<option>Hipotecario</option>
+<option>Microcrédito</option>
+<option>Empresarial</option>
+<option>Educativo</option>
+<option>Salud</option>
+<option>Productivo</option>
+<option>Comercial</option>
+<option>Unificación de Deudas</option>
+<option>Inversión</option>
+<option>Libre Inversión</option>
+
+</select>
+
+<label>Monto</label>
+<select id="monto">
+
+<option value="">Seleccione</option>
+
+<option value="3000">$3.000</option>
+<option value="5000">$5.000</option>
+<option value="6000">$6.000</option>
+<option value="7000">$7.000</option>
+<option value="8000">$8.000</option>
+<option value="10000">$10.000</option>
+<option value="12000">$12.000</option>
+<option value="15000">$15.000</option>
+<option value="18000">$18.000</option>
+<option value="20000">$20.000</option>
+<option value="22000">$22.000</option>
+<option value="25000">$25.000</option>
+<option value="27000">$27.000</option>
+<option value="28000">$28.000</option>
+<option value="30000">$30.000</option>
+<option value="32000">$32.000</option>
+<option value="35000">$35.000</option>
+<option value="38000">$38.000</option>
+<option value="40000">$40.000</option>
+<option value="43000">$43.000</option>
+<option value="45000">$45.000</option>
+<option value="48000">$48.000</option>
+<option value="50000">$50.000</option>
+<option value="55000">$55.000</option>
+<option value="60000">$60.000</option>
+
+</select>
+
+<label>Plazo</label>
+<select id="plazo">
+
+<option value="">Seleccione</option>
+
+<option value="24">24 meses</option>
+<option value="36">36 meses</option>
+<option value="48">48 meses</option>
+<option value="60">60 meses</option>
+<option value="72">72 meses</option>
+<option value="84">84 meses</option>
+
+</select>
+
+<label>Garantía</label>
+<input id="garantia" readonly>
+
+<label>Cuota Mensual</label>
+<input id="cuota" readonly>
+
+<label>Interés</label>
+<input id="interes" readonly>
+
+<button onclick="generarPDF()">
+DESCARGAR REQUISITOS
+</button>
+
+</div>
+
+<!-- PDF -->
+
+<div id="ticketPDF">
+
+<div class="ticket-header">
+    <h1>REQUISITOS</h1>
+    <p>INFORMACION GRATUITA</p>
+</div>
+
+<div class="ticket-body" id="contenidoTicket">
+
+</div>
+
+</div>
+
+<script>
+
+const tabla = {
+
+3000:{24:132,36:89,48:67,60:54,72:46,84:40,garantia:369},
+5000:{24:220,36:148,48:112,60:90,72:76,84:66,garantia:409},
+6000:{24:264,36:177,48:134,60:108,72:91,84:79,garantia:479},
+7000:{24:308,36:207,48:156,60:126,72:106,84:92,garantia:539},
+8000:{24:352,36:236,48:178,60:144,72:121,84:105,garantia:609},
+
+10000:{24:440,36:295,48:223,60:180,72:151,84:131,garantia:799},
+12000:{24:528,36:354,48:267,60:215,72:181,84:157,garantia:939},
+15000:{24:660,36:442,48:334,60:269,72:227,84:196,garantia:1149},
+18000:{24:792,36:530,48:401,60:323,72:272,84:235,garantia:1359},
+20000:{24:880,36:589,48:445,60:359,72:302,84:261,garantia:1499},
+22000:{24:968,36:648,48:490,60:395,72:332,84:287,garantia:1549},
+25000:{24:1099,36:737,48:556,60:448,72:377,84:326,garantia:1599},
+27000:{24:1187,36:795,48:601,60:484,72:407,84:352,garantia:1719},
+28000:{24:1231,36:825,48:623,60:502,72:422,84:365,garantia:1779},
+30000:{24:1319,36:884,48:668,60:538,72:453,84:391,garantia:1899},
+
+32000:{24:1407,36:943,48:712,60:574,72:483,84:417,garantia:2019},
+35000:{24:1539,36:1031,48:779,60:628,72:528,84:457,garantia:2199},
+38000:{24:1671,36:1119,48:846,60:681,72:573,84:496,garantia:2379},
+40000:{24:1759,36:1178,48:890,60:717,72:603,84:522,garantia:2499},
+43000:{24:1891,36:1267,48:957,60:771,72:648,84:561,garantia:2679},
+
+45000:{24:1979,36:1325,48:1001,60:807,72:679,84:587,garantia:2849},
+48000:{24:2110,36:1414,48:1068,60:860,72:724,84:626,garantia:3029},
+50000:{24:2198,36:1473,48:1112,60:896,72:754,84:652,garantia:3149},
+55000:{24:2418,36:1620,48:1224,60:986,72:829,84:717,garantia:3449},
+60000:{24:2638,36:1767,48:1335,60:1075,72:905,84:782,garantia:3749}
+
+};
+
+const interesTabla = {
+
+24:5.5,
+36:6,
+48:6.75,
+60:7.5,
+72:8.5,
+84:9.45
+
+};
+
+document.getElementById("monto")
+.addEventListener("change", calcular);
+
+document.getElementById("plazo")
+.addEventListener("change", calcular);
+
+function calcular(){
+
+    const monto =
+    document.getElementById("monto").value;
+
+    const plazo =
+    document.getElementById("plazo").value;
+
+    if(tabla[monto] && plazo){
+
+        document.getElementById("cuota").value =
+        "$" + tabla[monto][plazo];
+
+        document.getElementById("garantia").value =
+        "$" + tabla[monto].garantia;
+
+        document.getElementById("interes").value =
+        interesTabla[plazo] + "%";
+
+    }
+
+}
+
+function generarPDF(){
+
+    const cliente =
+    document.getElementById("cliente").value;
+
+    const credito =
+    document.getElementById("tipoCredito").value;
+
+    const monto =
+    document.getElementById("monto").value;
+
+    const plazo =
+    document.getElementById("plazo").value;
+
+    const garantia =
+    document.getElementById("garantia").value;
+
+    const cuota =
+    document.getElementById("cuota").value;
+
+    const interes =
+    document.getElementById("interes").value;
+
+    const html = `
+
+    <div class="titulo">
+    DATOS DEL CLIENTE
+    </div>
+
+    <div class="info">
+    <strong>Cliente:</strong> ${cliente.toUpperCase()}
+    </div>
+
+    <div class="info">
+    <strong>Crédito:</strong> ${credito}
+    </div>
+
+    <div class="linea"></div>
+
+    <div class="titulo">
+    REQUISITOS
+    </div>
+
+    <ul class="requisitos">
+        <li>🪪 Cédula de identidad</li>
+
+<li>🗳️ Papeleta de votación</li>
+<li>💡 Planilla de servicio básico (solo energía eléctrica)</li>
+<li>📄 Roles de pago de los últimos 3 meses (en caso de ser dependiente)</li>
+<li>🧾 Ruc o Rimpe (en caso de ser independiente)</li>
+<li>🏦 Cuenta bancaria para el desembolso</li>
+<li>💰 Valor de garantía${garantia}</li>
+<li>👥 Dos referencias personales (con certificados de honorabilidad)</li>
+<li>📧 Correo electrónico</li>
+</ul>
+    </ul>
+
+    <div class="resumen">
+
+        <div><strong>Monto:</strong> $${monto}</div>
+
+        <div><strong>Garantía:</strong> ${garantia}</div>
+
+        <div><strong>Cuota:</strong> ${cuota}</div>
+
+        <div><strong>Plazo:</strong> ${plazo} meses</div>
+
+        <div><strong>Interés:</strong> ${interes}</div>
+
+    </div>
+
+    <div class="mensaje">
+    Para continuar con el proceso del tramite,
+    debe acudir con todos los requisitos completos sin omitir ninguno
+    y documentación vigente.
+    </div>
+
+    <div class="footer">
+    REQUITOS VALIDOS
+    </div>
+
+    `;
+
+    document.getElementById("contenidoTicket").innerHTML =
+    html;
+
+    const ticket =
+    document.getElementById("ticketPDF");
+
+    html2canvas(ticket,{
+
+        scale:4,
+        backgroundColor:"#ffffff"
+
+    }).then(canvas=>{
+
+        const imgData =
+        canvas.toDataURL("image/jpeg",1.0);
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf =
+        new jsPDF({
+
+            orientation:"portrait",
+            unit:"mm",
+            format:[80,180]
+
+        });
+
+        pdf.addImage(
+            imgData,
+            "JPEG",
+            0,
+            0,
+            80,
+            180
+        );
+
+        pdf.save(
+            cliente.toUpperCase() + "_REQUISITOS_VALIDOS.pdf"
+        );
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
